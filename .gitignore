@@ -1,0 +1,15 @@
+# Vagrant configuration file for Hardening Container project
+.vagrant
+Vagrantfile
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Git
+.git
+
+# Node
+node_modules/
+npm-debug.log*

@@ -1,16 +1,19 @@
-FROM ubuntu:latest
+FROM node:22-trixie-slim
+
+ENV NODE_ENV=production
+ENV PORT=3000
 
 WORKDIR /app
 
-COPY . .
+COPY --chown=node:node app/package*.json ./
 
-RUN apt-get update
-RUN apt-get install -y nodejs npm
+RUN npm ci --omit=dev --no-audit --no-fund \
+    && npm cache clean --force
 
-RUN npm install
+COPY --chown=node:node app/ ./
 
-ENV DB_PASSWORD=123456
+USER node
 
 EXPOSE 3000
 
-CMD ["node", "app/server.js"]
+CMD ["node", "server.js"]
